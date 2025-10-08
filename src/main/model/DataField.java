@@ -1,11 +1,11 @@
 package model;
 
-
 /*
-Represents a single field definition within a data set
-name represents the label of the data
-type represents the type of values generated
-*/
+ * Represents a single field definition within a data set
+ * name represents the label of the data
+ * type represents the type of values generated.
+ * 
+ */
 
 
 public class DataField {
