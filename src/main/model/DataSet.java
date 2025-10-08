@@ -31,7 +31,7 @@ public class DataSet {
 
     }
 
-    // EFFECTS: returns a list of all datafields in the dataset
+    // EFFECTS: returns a list of all data fields in the dataset
     public List<DataField> getFields() {
         return null;
     }
