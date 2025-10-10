@@ -33,6 +33,11 @@ public class DataSet {
         fields.remove(field);
     }
 
+    // EFFECTS: returns the name of this dataset
+    public String getName() {
+        return name;
+    }
+
     // EFFECTS: returns a list of all data fields in the dataset
     public List<DataField> getFields() {
         return fields;
