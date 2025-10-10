@@ -1,12 +1,11 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataFieldTest {
-    
+
     private DataField testDataField;
 
     @BeforeEach
@@ -20,17 +19,17 @@ public class DataFieldTest {
         assertEquals("String", testDataField.getType());
     }
 
-    @Test 
+    @Test
     public void testGetName() {
         assertEquals("First Name", testDataField.getName());
     }
 
-    @Test 
+    @Test
     public void testGetType() {
         assertEquals("String", testDataField.getType());
     }
 
-    @Test 
+    @Test
     public void testGenerateValue() {
         testDataField.generateValue();
     }

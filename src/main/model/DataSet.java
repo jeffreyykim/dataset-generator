@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -16,28 +17,33 @@ public class DataSet {
     // REQUIRES: name is not an empty string
     // EFFECTS: constructs an empty dataset using the given name
     public DataSet(String name) {
-
+        this.name = name;
+        this.fields = new ArrayList<>();
     }
 
     // MODIFIES: this
     // EFFECTS: adds the given field to the dataset
     public void addField(DataField field) {
-
+        fields.add(field);
     }
 
     // MODIFIES: this
     // EFFECTS: removes the given field from the dataset if it exists
     public void removeField(DataField field) {
-
+        fields.remove(field);
     }
 
     // EFFECTS: returns a list of all data fields in the dataset
     public List<DataField> getFields() {
-        return null;
+        return fields;
     }
 
     // EFFECTS: uses generateValue() for each datafield to generate mock data
     public List<String> generateData() {
-        return null;
+        List<String> generated = new ArrayList<>();
+        for (DataField f : fields) {
+            generated.add(f.generateValue());
+        }
+        return generated;
     }
 }
