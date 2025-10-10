@@ -24,7 +24,7 @@ public class DataGeneratorApp {
 
         while (keepGoing) {
             displayMenu();
-            command = input.next().toLowerCase();
+            command = input.nextLine().toLowerCase();
 
             if (command.equals("q")) {
                 keepGoing = false;
@@ -66,7 +66,7 @@ public class DataGeneratorApp {
 
     private void createDataSet() {
         System.out.println("Enter dataset name: ");
-        String name = input.next();
+        String name = input.nextLine();
         dataset = new DataSet(name);
         System.out.println("Dataset \"" + name + "\" created.");
     }
@@ -76,9 +76,9 @@ public class DataGeneratorApp {
             System.out.println("Please create a dataset first.");
         } else {
             System.out.println("Enter field name: ");
-            String name = input.next();
+            String name = input.nextLine();
             System.out.println("Enter field type (String/Integer): ");
-            String type = input.next();
+            String type = input.nextLine();
             dataset.addField(new DataField(name, type));
             System.out.println("Field \"" + name + "\" added.");
         }
@@ -89,7 +89,7 @@ public class DataGeneratorApp {
             System.out.println("Please create a dataset first.");
         } else {
             System.out.println("Enter field name to remove: ");
-            String name = input.next();
+            String name = input.nextLine();
             DataField toRemove = null;
             for (DataField f : dataset.getFields()) {
                 if (f.getName().equalsIgnoreCase(name)) {
