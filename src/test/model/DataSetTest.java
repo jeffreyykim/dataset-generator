@@ -1,22 +1,27 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class DataSetTest {
 
     private DataSet testDataSet;
-    private DataField dataField1;
-    private DataField dataField2;
+    private DataField stringDataField;
+    private DataField intDataField;
+    private DataField unknownDataField;
 
     @BeforeEach
     public void runBefore() {
         testDataSet = new DataSet("Test Dataset");
-        dataField1 = new DataField("First Name", "String");
-        dataField2 = new DataField("Age", "Integer");
+        stringDataField = new DataField("First Name", "String");
+        intDataField = new DataField("Age", "Integer");
+        unknownDataField = new DataField("Unknown", "Boolean");
     }
 
     @Test
@@ -26,33 +31,40 @@ public class DataSetTest {
 
     @Test
     public void testAddField() {
-        testDataSet.addField(dataField1);
+        testDataSet.addField(stringDataField);
         assertEquals(1, testDataSet.getFields().size());
-        testDataSet.addField(dataField2);
+        assertTrue(testDataSet.getFields().contains(stringDataField));
+        testDataSet.addField(intDataField);
         assertEquals(2, testDataSet.getFields().size());
+        assertTrue(testDataSet.getFields().contains(intDataField));
     }
 
     @Test 
     public void testRemoveField() {
-        testDataSet.addField(dataField1);
+        testDataSet.addField(stringDataField);
         assertEquals(1, testDataSet.getFields().size());
-        testDataSet.removeField(dataField1);
+        testDataSet.removeField(stringDataField);
         assertEquals(0, testDataSet.getFields().size());
     }
 
     @Test 
     public void testGetFields() {
-        testDataSet.addField(dataField1);
-        assertTrue(testDataSet.getFields().contains(dataField1));
-        testDataSet.addField(dataField2);
-        assertTrue(testDataSet.getFields().contains(dataField2));
+        testDataSet.addField(stringDataField);
+        assertTrue(testDataSet.getFields().contains(stringDataField));
+        testDataSet.addField(intDataField);
+        assertTrue(testDataSet.getFields().contains(intDataField));
     }
 
     @Test
     public void testGenerateData() {
-        testDataSet.addField(dataField1);
-        testDataSet.addField(dataField2);
+        testDataSet.addField(stringDataField);
+        testDataSet.addField(intDataField);
+        testDataSet.addField(unknownDataField);
 
-        assertEquals(testDataSet.getFields().size(), testDataSet.generateData().size());
+        List<String> generated = testDataSet.generateData();
+        assertEquals(testDataSet.getFields().size(), 3);
+
+        assertTrue(generated.get(0).startsWith("Sample_"));
+        assertEquals(generated.get(2), "Unknown Type");
     }
 }

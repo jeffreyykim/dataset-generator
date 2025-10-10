@@ -8,6 +8,7 @@ public class DataFieldTest {
 
     private DataField testDataField;
 
+
     @BeforeEach
     public void runBefore() {
         testDataField = new DataField("First Name", "String");
