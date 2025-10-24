@@ -10,7 +10,6 @@ import java.util.List;
  * Represents a dataset which contains numerous DataFields
  * A dataset has the ability to add, remove, and list its fields,
  * and can generate mock data entries from them.
- * 
  */
 public class DataSet implements Writable {
     private String name;
