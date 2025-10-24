@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +12,7 @@ import java.util.List;
  * and can generate mock data entries from them.
  * 
  */
-public class DataSet {
+public class DataSet implements Writable {
     private String name;
     private List<DataField> fields;
 
@@ -50,5 +53,22 @@ public class DataSet {
             generated.add(f.generateValue());
         }
         return generated;
+    }
+
+    // EFFECTS: returns this DataSet as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("fields", fieldsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns fields in this dataset as a JSON array
+    private JSONArray fieldsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (DataField f : fields) {
+            jsonArray.put(f.toJson());
+        }
+        return jsonArray;
     }
 }
