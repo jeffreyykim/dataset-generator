@@ -1,4 +1,4 @@
-package model;
+package persistence;
 
 import model.DataSet;
 import java.io.IOException;
