@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
 import java.util.Random;
 
 /*
@@ -7,7 +9,7 @@ import java.util.Random;
  * name represents the label of the data
  * type represents the type of values generated.
  */
-public class DataField {
+public class DataField implements Writable {
     private String name;
     private String type;
     private static final Random rand = new Random();
@@ -38,5 +40,14 @@ public class DataField {
         } else {
             return "Unknown Type";
         }
+    }
+
+    // EFFECTS: returns this DataField as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("type", type);
+        return json;
     }
 }
