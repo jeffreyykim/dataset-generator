@@ -29,5 +29,7 @@ I often test many of my personal projects in web development with sample data. B
 
 - As a user, I want to be able to **see a preview of the generated mock data**, to confirm the data before exporting to CSV or JSON
 
+- As a user, I want to have the **option to save my dataset to a file**, so I can preserve my work and reuse it later
 
+- As a user, I want to have the **option to load a saved dataset from a file**, so I can continue editing or generating data from where I left off
 
