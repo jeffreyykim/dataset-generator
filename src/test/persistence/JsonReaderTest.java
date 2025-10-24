@@ -46,7 +46,7 @@ public class JsonReaderTest extends JsonTest {
             assertEquals("My dataset", ds.getName());
             List<DataField> fields = ds.getFields();
             assertEquals(2, fields.size());
-            checkField("name", "String", fields.get(0));
+            checkField("Name", "String", fields.get(0));
             checkField("Age", "Integer", fields.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
