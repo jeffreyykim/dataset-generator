@@ -1,0 +1,13 @@
+{
+    "name": "My dataset",
+    "fields": [
+        {
+            "name": "Name",
+            "type": "String"
+        },
+        {
+            "name": "Age",
+            "type": "Integer"
+        }
+    ]
+}
