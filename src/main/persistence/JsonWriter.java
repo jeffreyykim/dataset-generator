@@ -37,6 +37,6 @@ public class JsonWriter {
     }
 
     public void close() {
-        // stub
+        writer.close();
     }
 }
