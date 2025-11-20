@@ -46,7 +46,7 @@ public class DataFieldTest {
         String value = intField.generateValue();
 
         int intValue = Integer.parseInt(value);
-        assertTrue (intValue >= 0 && intValue < 100);
+        assertTrue(intValue >= 0 && intValue < 100);
     }
 
     @Test

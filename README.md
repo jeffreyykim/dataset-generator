@@ -33,3 +33,18 @@ I often test many of my personal projects in web development with sample data. B
 
 - As a user, I want to have the **option to load a saved dataset from a file**, so I can continue editing or generating data from where I left off
 
+# Instructions for End User
+
+- You can view the panel that displays the data fields that have already been added to the data set by looking at the center panel of the window
+
+- You can generate the second required action related to the user story "remove a data field from a data set" by selecting an existing data field and clicking the **"Remove Selected Field"** button
+
+- You can generate the first required action related to the user story "see a preview of the generated mock data" by clicking the **"Generate Data Row"** button near the bottom of the window. 
+
+- You can locate my visual component by looking at the top left corner of the window
+
+- You can save the state of my application by clicking the **"Save"** button near the bottom of the window
+
+- You can reload the state of my application by clicking the **"Load"** button near the bottom of the window
+
+

@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 import java.util.List;
@@ -71,6 +70,7 @@ public class DataGeneratorGUI extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: creates bottom panel with controls for adding/removing fields
+    @SuppressWarnings("methodlength")
     private void addControlPanel() {
         JPanel controlPanel = new JPanel();
         controlPanel.setBorder(BorderFactory.createTitledBorder("EditFields"));
@@ -107,13 +107,13 @@ public class DataGeneratorGUI extends JFrame {
         bottomPanel.add(ioPanel, BorderLayout.SOUTH);
 
         add(bottomPanel, BorderLayout.SOUTH);
-
         addListeners();
     }
 
     // MODIFIES: this, dataSet
     // EFFECTS: sets up button listeners for adding/removing fields
-    //          if error occurs, displays dialog
+    // if error occurs, displays dialog
+    @SuppressWarnings("methodlength")
     private void addListeners() {
         addFieldButton.addActionListener(new ActionListener() {
             @Override
@@ -165,9 +165,9 @@ public class DataGeneratorGUI extends JFrame {
                     model.DataField f = fields.get(i);
                     String v = values.get(i);
                     sb.append(f.getName())
-                    .append(": ")
-                    .append(v)
-                    .append("\n");
+                            .append(": ")
+                            .append(v)
+                            .append("\n");
                 }
 
                 outputArea.setText(sb.toString());
@@ -186,11 +186,10 @@ public class DataGeneratorGUI extends JFrame {
                 } catch (FileNotFoundException ex) {
                     statusLabel.setText("Unable to write to file: " + JSON_STORE);
                     JOptionPane.showMessageDialog(
-                        DataGeneratorGUI.this, 
-                        "Unable to write to file:\n" + JSON_STORE,
-                        "Save Error",
-                        JOptionPane.ERROR_MESSAGE
-                        );
+                            DataGeneratorGUI.this,
+                            "Unable to write to file:\n" + JSON_STORE,
+                            "Save Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -205,17 +204,15 @@ public class DataGeneratorGUI extends JFrame {
                     outputArea.setText("");
                     statusLabel.setText("Loaded " + dataSet.getName() + " from " + JSON_STORE);
                 } catch (IOException ex) {
-                    statusLabel.setText("Unable to read from file: " +JSON_STORE);
+                    statusLabel.setText("Unable to read from file: " + JSON_STORE);
                     JOptionPane.showMessageDialog(
-                        DataGeneratorGUI.this, 
-                        "Unable to read from file:\n" + JSON_STORE,
-                        "Load Error",
-                        JOptionPane.ERROR_MESSAGE
-                    );
+                            DataGeneratorGUI.this,
+                            "Unable to read from file:\n" + JSON_STORE,
+                            "Load Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-
 
     }
 
@@ -227,7 +224,7 @@ public class DataGeneratorGUI extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: creates the top panel with an image and status;
-    //          if there is no image, does not include image and only status
+    // if there is no image, does not include image and only status
     private void initTopPanel() {
         statusLabel = new JLabel(STATUS_OK);
         String imgPath = "images/data.png";
