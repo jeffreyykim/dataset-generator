@@ -62,8 +62,8 @@ public class DataSetTest {
         testDataSet.addField(unknownDataField);
 
         List<String> generated = testDataSet.generateData();
-        assertEquals(testDataSet.getFields().size(), 3);
-
+        assertEquals(testDataSet.getFields().size(), generated.size());
+        assertEquals(3, generated.size());
         assertTrue(generated.get(0).startsWith("Sample_"));
         assertEquals(generated.get(2), "Unknown Type");
     }
