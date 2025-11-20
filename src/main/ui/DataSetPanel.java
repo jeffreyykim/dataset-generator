@@ -42,4 +42,8 @@ public class DataSetPanel extends JPanel {
             listModel.addElement(line);
         }
     }
+
+     public int getSelectedIndex() {
+        return fieldList.getSelectedIndex();
+    }
 }
