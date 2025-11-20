@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import java.awt.*;
 import java.util.List;
@@ -24,7 +25,9 @@ import java.awt.event.ActionListener;
 public class DataGeneratorGUI extends JFrame {
     private static final String JSON_STORE = "./data/dataset.json";
     private static final String STATUS_OK = "Ready";
+
     private JLabel statusLabel;
+    private JLabel imageLabel;
 
     private DataSet dataSet;
     private DataSetPanel dataSetPanel;
@@ -54,8 +57,7 @@ public class DataGeneratorGUI extends JFrame {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
-        statusLabel = new JLabel(STATUS_OK);
-        add(statusLabel, BorderLayout.NORTH);
+        initTopPanel();
 
         dataSetPanel = new DataSetPanel(dataSet);
         add(dataSetPanel, BorderLayout.CENTER);
@@ -111,6 +113,7 @@ public class DataGeneratorGUI extends JFrame {
 
     // MODIFIES: this, dataSet
     // EFFECTS: sets up button listeners for adding/removing fields
+    //          if error occurs, displays dialog
     private void addListeners() {
         addFieldButton.addActionListener(new ActionListener() {
             @Override
@@ -220,6 +223,29 @@ public class DataGeneratorGUI extends JFrame {
     // otherwise, returns -1 if nothing is selected
     private int dataSetPanelIndexOfSelection() {
         return dataSetPanel.getSelectedIndex();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the top panel with an image and status;
+    //          if there is no image, does not include image and only status
+    private void initTopPanel() {
+        statusLabel = new JLabel(STATUS_OK);
+        String imgPath = "images/data.png";
+        ImageIcon rawIcon = new ImageIcon(imgPath);
+
+        if (rawIcon.getIconWidth() > 0) {
+            Image scaled = rawIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(scaled);
+            imageLabel = new JLabel(icon);
+        } else {
+            imageLabel = new JLabel();
+        }
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(imageLabel, BorderLayout.WEST);
+        topPanel.add(statusLabel, BorderLayout.CENTER);
+
+        add(topPanel, BorderLayout.NORTH);
     }
 
 }
