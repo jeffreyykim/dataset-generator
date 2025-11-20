@@ -5,6 +5,7 @@ import model.DataSet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,6 +25,9 @@ public class DataGeneratorGUI extends JFrame {
     private JComboBox<String> fieldTypeCombo;
     private JButton addFieldButton;
     private JButton removeFieldButton;
+
+    private JTextArea outputArea;
+    private JButton generateButton;
 
     // EFFECTS: constructs the main GUI window
     public DataGeneratorGUI() {
@@ -65,7 +69,21 @@ public class DataGeneratorGUI extends JFrame {
         controlPanel.add(addFieldButton);
         controlPanel.add(removeFieldButton);
 
-        add(controlPanel, BorderLayout.SOUTH);
+        outputArea = new JTextArea(5, 40);
+        outputArea.setEditable(false);
+        JScrollPane outputScroll = new JScrollPane(outputArea);
+
+        generateButton = new JButton("Generate Data Row");
+
+        JPanel generatePanel = new JPanel();
+        generatePanel.add(generateButton);
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(controlPanel, BorderLayout.NORTH);
+        bottomPanel.add(outputScroll, BorderLayout.CENTER);
+        bottomPanel.add(generatePanel, BorderLayout.SOUTH);
+
+        add(bottomPanel, BorderLayout.SOUTH);
 
         addListeners();
     }
@@ -104,6 +122,31 @@ public class DataGeneratorGUI extends JFrame {
                 dataSet.removeField(toRemove);
 
                 dataSetPanel.refresh();
+                statusLabel.setText(STATUS_OK);
+            }
+        });
+
+        generateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (dataSet.getFields().isEmpty()) {
+                    statusLabel.setText("Add at least one field before generating data.");
+                    return;
+                }
+                List<String> values = dataSet.generateData();
+                List<model.DataField> fields = dataSet.getFields();
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < fields.size(); i++) {
+                    model.DataField f = fields.get(i);
+                    String v = values.get(i);
+                    sb.append(f.getName())
+                    .append(": ")
+                    .append(v)
+                    .append("\n");
+                }
+
+                outputArea.setText(sb.toString());
                 statusLabel.setText(STATUS_OK);
             }
         });
