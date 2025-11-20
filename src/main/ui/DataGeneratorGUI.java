@@ -1,6 +1,7 @@
 package ui;
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+import model.DataSet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,9 @@ import java.awt.*;
 public class DataGeneratorGUI extends JFrame {
     private static final String STATUS_OK = "Ready";
     private JLabel statusLabel;
-    private JPanel centerPanel;
+
+    private DataSet dataSet;
+    private DataSetPanel dataSetPanel;
 
     // EFFECTS: constructs the main GUI window
     public DataGeneratorGUI() {
@@ -21,13 +24,13 @@ public class DataGeneratorGUI extends JFrame {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        dataSet = new DataSet("My dataset");
+
         statusLabel = new JLabel(STATUS_OK);
         add(statusLabel, BorderLayout.NORTH);
 
-        centerPanel = new JPanel();
-        centerPanel.setPreferredSize(new Dimension(600, 400));
-        centerPanel.setBackground(new Color(240, 240, 240));
-        add(centerPanel, BorderLayout.CENTER);
+        dataSetPanel = new DataSetPanel(dataSet);
+        add(dataSetPanel, BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
