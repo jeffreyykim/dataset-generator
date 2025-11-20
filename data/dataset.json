@@ -6,8 +6,8 @@
             "type": "String"
         },
         {
-            "name": "Age",
-            "type": "Integer"
+            "name": "Hello",
+            "type": "String"
         }
     ]
 }

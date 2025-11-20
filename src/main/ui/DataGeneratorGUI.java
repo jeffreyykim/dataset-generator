@@ -3,7 +3,14 @@ package ui;
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 import model.DataSet;
 
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -15,6 +22,7 @@ import java.awt.event.ActionListener;
  */
 @ExcludeFromJacocoGeneratedReport
 public class DataGeneratorGUI extends JFrame {
+    private static final String JSON_STORE = "./data/dataset.json";
     private static final String STATUS_OK = "Ready";
     private JLabel statusLabel;
 
@@ -26,8 +34,14 @@ public class DataGeneratorGUI extends JFrame {
     private JButton addFieldButton;
     private JButton removeFieldButton;
 
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     private JTextArea outputArea;
     private JButton generateButton;
+
+    private JButton saveButton;
+    private JButton loadButton;
 
     // EFFECTS: constructs the main GUI window
     public DataGeneratorGUI() {
@@ -36,6 +50,9 @@ public class DataGeneratorGUI extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         dataSet = new DataSet("My dataset");
+
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         statusLabel = new JLabel(STATUS_OK);
         add(statusLabel, BorderLayout.NORTH);
@@ -57,7 +74,7 @@ public class DataGeneratorGUI extends JFrame {
         controlPanel.setBorder(BorderFactory.createTitledBorder("EditFields"));
 
         fieldNameField = new JTextField(10);
-        fieldTypeCombo = new JComboBox<>(new String[] {"String", "Integer"});
+        fieldTypeCombo = new JComboBox<>(new String[] { "String", "Integer" });
 
         addFieldButton = new JButton("Add Field");
         removeFieldButton = new JButton("Remove Selected Field");
@@ -74,14 +91,18 @@ public class DataGeneratorGUI extends JFrame {
         JScrollPane outputScroll = new JScrollPane(outputArea);
 
         generateButton = new JButton("Generate Data Row");
+        saveButton = new JButton("Save");
+        loadButton = new JButton("Load");
 
-        JPanel generatePanel = new JPanel();
-        generatePanel.add(generateButton);
+        JPanel ioPanel = new JPanel();
+        ioPanel.add(generateButton);
+        ioPanel.add(saveButton);
+        ioPanel.add(loadButton);
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(controlPanel, BorderLayout.NORTH);
         bottomPanel.add(outputScroll, BorderLayout.CENTER);
-        bottomPanel.add(generatePanel, BorderLayout.SOUTH);
+        bottomPanel.add(ioPanel, BorderLayout.SOUTH);
 
         add(bottomPanel, BorderLayout.SOUTH);
 
@@ -151,13 +172,54 @@ public class DataGeneratorGUI extends JFrame {
             }
         });
 
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    jsonWriter.open();
+                    jsonWriter.write(dataSet);
+                    jsonWriter.close();
+                    statusLabel.setText("Saved " + dataSet.getName() + " to " + JSON_STORE);
+                } catch (FileNotFoundException ex) {
+                    statusLabel.setText("Unable to write to file: " + JSON_STORE);
+                    JOptionPane.showMessageDialog(
+                        DataGeneratorGUI.this, 
+                        "Unable to write to file:\n" + JSON_STORE,
+                        "Save Error",
+                        JOptionPane.ERROR_MESSAGE
+                        );
+                }
+            }
+        });
+
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DataSet loaded = jsonReader.read();
+                    dataSet = loaded;
+                    dataSetPanel.setDataSet(dataSet);
+                    outputArea.setText("");
+                    statusLabel.setText("Loaded " + dataSet.getName() + " from " + JSON_STORE);
+                } catch (IOException ex) {
+                    statusLabel.setText("Unable to read from file: " +JSON_STORE);
+                    JOptionPane.showMessageDialog(
+                        DataGeneratorGUI.this, 
+                        "Unable to read from file:\n" + JSON_STORE,
+                        "Load Error",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+
+
     }
 
     // EFFECTS: returns index of selected field in dataSetPanel;
-    //          otherwise, returns -1 if nothing is selected
+    // otherwise, returns -1 if nothing is selected
     private int dataSetPanelIndexOfSelection() {
         return dataSetPanel.getSelectedIndex();
     }
-
 
 }

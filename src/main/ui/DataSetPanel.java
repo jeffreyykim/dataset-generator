@@ -43,7 +43,14 @@ public class DataSetPanel extends JPanel {
         }
     }
 
-     public int getSelectedIndex() {
+    public int getSelectedIndex() {
         return fieldList.getSelectedIndex();
+    }
+    
+    // MODIFIES: this 
+    // EFFECTS: updates this panel to display fields from the new DataSet
+    public void setDataSet(DataSet dataSet) {
+        this.dataSet = dataSet;
+        refresh();
     }
 }
