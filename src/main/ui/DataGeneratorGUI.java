@@ -16,6 +16,12 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import model.Event;
+import model.EventLog;
+
 /*
  * Represent the main window for the mock data generator application.
  * Displays the current DataSet and illustrates control for user stories. 
@@ -50,6 +56,16 @@ public class DataGeneratorGUI extends JFrame {
         super("Mock Data Generator");
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // EFFECTS: when the main window is closing, print all logged events to console
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event ev : EventLog.getInstance()) {
+                    System.out.println(ev.toString());
+                }
+            }
+        });
 
         dataSet = new DataSet("My dataset");
 

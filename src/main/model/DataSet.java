@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
+import model.Event;
+import model.EventLog;
 
 /*
  * Represents a dataset which contains numerous DataFields
@@ -27,12 +29,20 @@ public class DataSet implements Writable {
     // EFFECTS: adds the given field to the dataset
     public void addField(DataField field) {
         fields.add(field);
+        EventLog.getInstance().logEvent(
+            new Event("Added field \"" + field.getName()
+                + "\" (" + field.getType() + ") to dataset \"" + name + "\"")
+        );
     }
 
     // MODIFIES: this
     // EFFECTS: removes the given field from the dataset if it exists
     public void removeField(DataField field) {
         fields.remove(field);
+        EventLog.getInstance().logEvent(
+            new Event("Removed field \"" + field.getName()
+                + "\" (" + field.getType() + ") from dataset \"" + name + "\"")
+        );
     }
 
     // EFFECTS: returns the name of this dataset
@@ -51,6 +61,12 @@ public class DataSet implements Writable {
         for (DataField f : fields) {
             generated.add(f.generateValue());
         }
+
+        EventLog.getInstance().logEvent(
+            new Event("Generated mock data row for dataset \"" + name
+                + "\" with " + fields.size() + " fields.")
+        );
+
         return generated;
     }
 

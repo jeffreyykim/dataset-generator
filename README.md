@@ -47,4 +47,13 @@ I often test many of my personal projects in web development with sample data. B
 
 - You can reload the state of my application by clicking the **"Load"** button near the bottom of the window
 
+# Phase 4: Task 2
+Fri Nov 28 14:35:15 PST 2025
+Added field "A" (String) to dataset "My dataset"
+Fri Nov 28 14:35:22 PST 2025
+Added field "B" (Integer) to dataset "My dataset"
+Fri Nov 28 14:35:23 PST 2025
+Removed field "A" (String) from dataset "My dataset"
+Fri Nov 28 14:35:27 PST 2025
+Generated mock data row for dataset "My dataset" with 1 fields.
 
