@@ -126,11 +126,20 @@ public class DataGeneratorGUI extends JFrame {
         addListeners();
     }
 
-    // MODIFIES: this, dataSet
-    // EFFECTS: sets up button listeners for adding/removing fields
-    // if error occurs, displays dialog
-    @SuppressWarnings("methodlength")
+
+    // MODIFIES: this
+    // EFFECTS: adds all button listeners for the GUI controls
     private void addListeners() {
+        addAddFieldListener();
+        addRemoveFieldListener();
+        addGenerateButtonListener();
+        addSaveButtonListener();
+        addLoadButtonListener();
+    }
+
+    // MODIFIES: this, dataSet
+    // EFFECTS: adds listener to addFieldButton to create a 
+    private void addAddFieldListener() {
         addFieldButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,7 +157,11 @@ public class DataGeneratorGUI extends JFrame {
                 fieldNameField.setText("");
             }
         });
+    }
 
+    // MODIFIES: this, dataSet
+    // EFFECTS: adds listener to removeFieldButton to remove the selected DataField from the DataSet
+    private void addRemoveFieldListener() {
         removeFieldButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,7 +170,6 @@ public class DataGeneratorGUI extends JFrame {
                     statusLabel.setText("No field selected to remove.");
                     return;
                 }
-
                 model.DataField toRemove = dataSet.getFields().get(index);
                 dataSet.removeField(toRemove);
 
@@ -165,7 +177,11 @@ public class DataGeneratorGUI extends JFrame {
                 statusLabel.setText(STATUS_OK);
             }
         });
+    }
 
+    // MODIFIES: this
+    // EFFECTS: adds listener to generateButton to display a row of mock data in the text area
+    private void addGenerateButtonListener() {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -173,6 +189,7 @@ public class DataGeneratorGUI extends JFrame {
                     statusLabel.setText("Add at least one field before generating data.");
                     return;
                 }
+
                 List<String> values = dataSet.generateData();
                 List<model.DataField> fields = dataSet.getFields();
 
@@ -181,16 +198,20 @@ public class DataGeneratorGUI extends JFrame {
                     model.DataField f = fields.get(i);
                     String v = values.get(i);
                     sb.append(f.getName())
-                            .append(": ")
-                            .append(v)
-                            .append("\n");
+                        .append(". ")
+                        .append(v)
+                        .append("\n");
                 }
 
                 outputArea.setText(sb.toString());
                 statusLabel.setText(STATUS_OK);
             }
         });
+    }
 
+    // MODIFIES: this
+    // EFFECTS: adds listener to saveButton to write the current DataSet to JSON_STORE
+    private void addSaveButtonListener() {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -202,16 +223,21 @@ public class DataGeneratorGUI extends JFrame {
                 } catch (FileNotFoundException ex) {
                     statusLabel.setText("Unable to write to file: " + JSON_STORE);
                     JOptionPane.showMessageDialog(
-                            DataGeneratorGUI.this,
-                            "Unable to write to file:\n" + JSON_STORE,
-                            "Save Error",
-                            JOptionPane.ERROR_MESSAGE);
+                        DataGeneratorGUI.this,
+                        "Unable to write to file:\n" + JSON_STORE,
+                        "Save Error",
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });
+    }
 
+    // MODIFIES: this, dataSet
+    // EFFECTS: adds listener to loadButton to read a DataSet from JSON_STORE and update the UI
+    private void addLoadButtonListener() {
         loadButton.addActionListener(new ActionListener() {
-            @Override
+            @Override 
             public void actionPerformed(ActionEvent e) {
                 try {
                     DataSet loaded = jsonReader.read();
@@ -222,14 +248,14 @@ public class DataGeneratorGUI extends JFrame {
                 } catch (IOException ex) {
                     statusLabel.setText("Unable to read from file: " + JSON_STORE);
                     JOptionPane.showMessageDialog(
-                            DataGeneratorGUI.this,
-                            "Unable to read from file:\n" + JSON_STORE,
-                            "Load Error",
-                            JOptionPane.ERROR_MESSAGE);
+                        DataGeneratorGUI.this,
+                        "Unable to read from file:\n" + JSON_STORE,
+                        "Load Error",
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });
-
     }
 
     // EFFECTS: returns index of selected field in dataSetPanel;
