@@ -200,7 +200,7 @@ public class DataGeneratorGUI extends JFrame {
                     sb.append(f.getName())
                         .append(". ")
                         .append(v)
-                        .append("\n");
+                            .append("\n");
                 }
 
                 outputArea.setText(sb.toString());
@@ -223,11 +223,11 @@ public class DataGeneratorGUI extends JFrame {
                 } catch (FileNotFoundException ex) {
                     statusLabel.setText("Unable to write to file: " + JSON_STORE);
                     JOptionPane.showMessageDialog(
-                        DataGeneratorGUI.this,
-                        "Unable to write to file:\n" + JSON_STORE,
-                        "Save Error",
-                        JOptionPane.ERROR_MESSAGE
-                    );
+                            DataGeneratorGUI.this,
+                            "Unable to write to file:\n" + JSON_STORE,
+                            "Save Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );  
                 }
             }
         });
@@ -248,10 +248,10 @@ public class DataGeneratorGUI extends JFrame {
                 } catch (IOException ex) {
                     statusLabel.setText("Unable to read from file: " + JSON_STORE);
                     JOptionPane.showMessageDialog(
-                        DataGeneratorGUI.this,
-                        "Unable to read from file:\n" + JSON_STORE,
-                        "Load Error",
-                        JOptionPane.ERROR_MESSAGE
+                            DataGeneratorGUI.this,
+                            "Unable to read from file:\n" + JSON_STORE,
+                            "Load Error",
+                            JOptionPane.ERROR_MESSAGE
                     );
                 }
             }

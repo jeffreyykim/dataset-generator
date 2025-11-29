@@ -57,3 +57,8 @@ Removed field "A" (String) from dataset "My dataset"
 Fri Nov 28 14:35:27 PST 2025
 Generated mock data row for dataset "My dataset" with 1 fields.
 
+# Phase 4: Task 3
+If given the opportunity to refactor my project, reducing coupling between the UI and model components would be helpful. For example, a dedicated DataSetController class would be a nice improvement as it would handle all the interactions between the GUI and the DataSet model. Looking at the project now, the GUI couples the UI and model more tightly than necessary by calling the model for adding and removing fields, and generating the data. 
+
+Another refactoring that could improve my app would be a DataField enum of field-type classes. An example of this would be a STRING_FIELD or a INTEGER_field to make my code more robust and easier to extend. Overall, if I were to implement these refactorings, they would improve maintainability, reduce direct dependencies, and make my project more extensible, all while preserving the project's current functionality. 
+
